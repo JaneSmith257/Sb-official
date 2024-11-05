@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SB Official</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f9fafb;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background-color: #1e3a8a;
+            color: white;
+            padding: 1rem;
+            width: 100%;
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            padding: 1.5rem;
+        }
+
+        .upload-form {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .upload-form h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .upload-form input[type="file"],
+        .upload-form input[type="text"],
+        .upload-form button {
+            display: block;
+            width: 100%;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+
+        .upload-form button {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .upload-form button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .media-posts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .media-post {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 400px;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .media-post h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            text-align: center;
+            color: #1e3a8a;
+        }
+
+        .media-post img,
+        .media-post video {
+            width: 100%;
+            border-radius: 10px;
+            max-height: 300px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+
+<header>SB Official</header>
+
+<div class="container">
+    <!-- Upload Form -->
+    <div class="upload-form">
+        <h2>Post Your Media</h2>
+        <input type="text" id="title" placeholder="Enter Title" required>
+        <input type="file" id="file" accept="image/*,video/*" required>
+        <button onclick="postMedia()">Post</button>
+    </div>
+
+    <!-- Media Gallery -->
+    <div class="media-posts" id="mediaPosts">
+        <!-- Media posts will appear here -->
+    </div>
+</div>
+
+<script>
+    function postMedia() {
+        const title = document.getElementById('title').value;
+        const fileInput = document.getElementById('file');
+        const file = fileInput.files[0];
+
+        if (!title || !file) {
+            alert("Please enter a title and select a file.");
+            return;
+        }
+
+        // Create a container for each media post
+        const mediaContainer = document.createElement('div');
+        mediaContainer.className = 'media-post';
+
+        // Create a title element
+        const mediaTitle = document.createElement('h3');
+        mediaTitle.innerText = title;
+        mediaContainer.appendChild(mediaTitle);
+
+        // Display image or video based on the file type
+        if (file.type.startsWith('image/')) {
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            img.alt = title;
+            mediaContainer.appendChild(img);
+        } else if (file.type.startsWith('video/')) {
+            const video = document.createElement('video');
+            video.src = URL.createObjectURL(file);
+            video.controls = true;
+            mediaContainer.appendChild(video);
+        }
+
+        // Append the new media post to the gallery
+        document.getElementById('mediaPosts').appendChild(mediaContainer);
+
+        // Clear form fields
+        document.getElementById('title').value = '';
+        fileInput.value = '';
+    }
+</script>
+
+</body>
+</html>
